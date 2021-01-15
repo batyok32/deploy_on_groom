@@ -1,0 +1,32 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+{% comment %}   
+  <link href="{% static "css/second_base.css" %}" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet"/> 
+  <link rel="stylesheet" href="{% static 'css/account/style.css' %}" /> 
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css"> {% endcomment %}
+</head>
+<body>
+  <div class="top__nav">
+        <a style='max-width: 100%;vertical-align: middle;border-style: none;' href="{% url 'shop:product_list' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
+        <a href="{% url 'shop:product_list' %}" class="btn"><i class="fa fa-shopping-cart"></i></a>
+        <a href="{% url 'dashboard' %}" class="btn"><i class="fa fa-home"></i></a>
+    </div>
+    
+  </div> 
+  
+
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+
+  <script src="{% static 'js/account/index.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'img/11.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>{% trans "Dashboard" %}</h2>
+                        <div class="breadcrumb__option">
+                            <a href="{% url 'shop:product_list' %}">{% trans "Home" %}</a>
+                            <span>{% trans "Dashboard" %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+    <div>
+        <div class="product__discount">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title related__product__title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                  <p style='margin-left:55px;'>Welcome to your dashboard. 
+                  You can 
+            
+              </div>
+            </div>
+        </div>
+        <div class="product__discount">
+          <div class="row">
+                <div class="col-lg-6 " style='width:50%;padding-right:15px;padding-left:55px;'>
+                  <button type="button" class="btn btn-success"><a class="section-title related__product__title" style='color:white;' href="{% url "edit" %}">Edit your profile</a></button>
+                </div>
+                <div class="col-lg-6" style='width:50%;padding-right:15px;padding-left:55px;'>
+                  <button type="button" class="btn btn-success" ><a class="section-title related__product__title" style='color:white;' href="{% url "password_change" %}">Change your password</a></button>
+                </div>
+              </div>
+              <div class="row">
+                <div style='margin-top:35px;margin-left:35px;' class="col-lg-6" style='width:50%;padding-right:15px;padding-left:55px;'>
+                  <button type="button" class="btn btn-success" ><a class="section-title related__product__title" style='color:white;' href="{% url "password_change" %}">Go to Shop</a></button>
+                </div>
+                <div style='margin-top:35px;margin-left:35px;' class="col-lg-6" style='width:50%;padding-right:15px;padding-left:55px;'>
+                  <button type="button" class="btn btn-success" ><a class="section-title related__product__title" style='color:white;' href="{% url "logout" %}">Log out</a></button>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+  
+{% endblock %}

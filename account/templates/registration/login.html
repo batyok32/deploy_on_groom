@@ -1,0 +1,119 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}Log-in{% endblock %}
+
+{% block content %}
+  {% comment %} <h1>Log-in</h1>
+  {% if form.errors %}
+    <p>
+      Your username and password didn't match.
+      Please try again.
+    </p>
+  {% else %}
+    <p>Please, use the following form to log-in. If you don't have an account <a href="{% url "register" %}">register here</a></p>
+  {% endif %}
+
+
+  <div class="login-form">
+    <form action="{% url 'login' %}" method="post">
+      {{ form.as_p }}
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}" />
+      <p><input type="submit" value="Log-in"></p>
+    </form>
+    <p><a href="{% url "password_reset" %}">Forgotten your password?</a></p>
+  </div> {% endcomment %}
+
+
+  
+  <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="{% static 'img/11.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>{% trans "Login" %}</h2>
+                        <div class="breadcrumb__option">
+                            <a href="{% url 'shop:product_list' %}">{% trans "Home" %}</a>
+                            <a href="{% url 'dashboard' %}">{% trans "Dashboard" %}</a>
+                            <span>{% trans "Login" %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% if form.errors %}
+    <p class='container' style='margin-top:35px; margin-bottom:35px;'>
+      <strong> {% trans "Your username and password didn't match.  Please try again" %}.</strong>
+    </p>
+  {% else %}
+    <p class='container' style='margin-top:35px; margin-bottom:35px;font-weight:bold;'>
+    Please, use the following form to log-in. 
+    If you don't have an account <a style='text-decoration:none;color: tomato;' href="{% url "register" %}">register here</a></p>
+  {% endif %}
+    <!-- Breadcrumb Section End -->
+
+    <!-- Checkout Section Begin -->
+<!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+            <div class="checkout__form">
+                <h4>{% trans "Login" %}</h4>
+                 <form method="post" class="order-form">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="checkout__input">
+                                        <p>Username<span>*</span></p>
+                                        {{ form.username }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                <div class="checkout__input">
+                                  <p>Password<span>*</span></p>
+                                  {{ form.password }}
+                                </div>
+                                </div>
+                                {% csrf_token %}
+                             </div>
+                            <button type="submit" class="site-btn">{% trans "Login" %}</button>
+                           </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            <div>
+        </div>
+    </section>
+
+  {% comment %} <div class="container">
+    <h3>Log-in</h3>
+    <p>Log-in is easy.</p>
+    <form id="form" class="form" action="{% url 'login' %}" method="post">
+      <div class="form__group">
+        <label for="name" class="">Name</label>
+        {{ form.username }}
+        <span class="helper-text"></span>
+      </div>
+
+
+      <div class="form__group">
+        <label for="password" class="">Password</label>
+        {{ form.password }}        
+        <span class="helper-text"></span>
+      </div>
+
+      {% csrf_token %}
+      <button class="btn__large">Login</button>
+    </form>
+    
+  </div> {% endcomment %}
+
+{% endblock %}
