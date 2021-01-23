@@ -10,3 +10,4 @@ def wishlist(request):
 
 def categories(request):
     return {'categories':Category.objects.all()}
+

@@ -20,3 +20,7 @@ def total_category_list():
     return {'category_list':category_list}
 
 
+
+@register.filter(name='addclass')
+def addclass(value, arg):
+    return value.as_widget(attrs={'class': arg})

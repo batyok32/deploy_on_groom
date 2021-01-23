@@ -5,6 +5,11 @@ from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditFor
 from .models import Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from orders.models import Order
+from shop.models import Comment, Contact
+from django.shortcuts import render, redirect, get_object_or_404
+from decimal import Decimal
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -29,9 +34,59 @@ def user_login(request):
 
 @login_required
 def dashboard(request):
+    lis=[]
+    user = request.user
+    print('trying to take orders')
+    orders = Order.objects.filter(user=user, active=True).order_by('created')
+    count=orders.count()
+    # total = sum(float(order.get_total_cost) for order in orders)
+    # total = [order.get_total_cost for order in orders]
+    # print("total orders price:", total)
+    # for t in total:
+    #     lis.append(str(t))
+    # print("lis:", lis)
+    # lis=sum(int(lis))
+    # print("sUccessfull")
+    total=259
+    comments = Comment.objects.filter(user=user)
+    comments=comments.count()
+    contacts=Contact.objects.filter(user=user)
+    contacts = contacts.count()
+    print('took orders', orders)
     return render(request,
             'account/dashboard.html',
-            {'section': 'dashboard'})
+            {'section': 'dashboard',
+            'orders': orders,
+            'count':count,
+            'total':total,
+            'comments':comments,
+            'contacts':contacts
+            })
+
+@login_required
+def order_detail(request, id):
+    user = request.user
+    # print('trying to take orders')
+    # all_orders = Order.objects.all()
+    order = get_object_or_404(Order, id=id)
+    if order.user != user:
+        messages.error(request, 'You have not access to this order')
+        return redirect('dashboard')
+
+    # orders = Order.objects.filter(user=user).order_by('created')
+    # print('took orders', orders)
+    return render(request,
+            'account/order_details.html',
+            {'section': 'dashboard',
+            'order': order})
+
+@login_required
+def order_delete(request, id):
+    user = request.user
+    order = get_object_or_404(Order, id=id, active=True, user=user)
+    order.active=False
+    order.save()
+    return redirect('dashboard')
 
 
 def register(request):

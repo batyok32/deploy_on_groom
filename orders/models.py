@@ -6,6 +6,7 @@ from coupons.models import Coupon
 from shop.models import Product
 from django.conf import settings
 from django.utils.translation import gettext as _
+from django.urls import reverse
 # from phonenumber_field.modelfields import PhoneNumberField
 
 class Order(models.Model):
@@ -36,6 +37,7 @@ class Order(models.Model):
     phone_number = models.BigIntegerField(_('phone_number'), validators=[MinValueValidator(61000000),
                     MaxValueValidator(65999999)])
     order_notes = models.TextField(_("order notes"))
+    active=models.BooleanField(default='True')
     # phone_number=PhoneNumberField(null=True, blank=True)
 
 
@@ -48,6 +50,10 @@ class Order(models.Model):
     def get_total_cost(self):
         total_cost=sum(item.get_cost() for item in self.items.all())
         return total_cost - total_cost * (self.discount / Decimal(100))
+    
+    def get_absolute_url(self):
+        return reverse("orders:order", args=[self.id])
+    
     
 class OrderItem(models.Model):
     order=models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)

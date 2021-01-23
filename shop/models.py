@@ -10,6 +10,7 @@ from decimal import Decimal
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.template.defaultfilters import floatformat
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 
 class Brand(models.Model):
@@ -145,6 +146,7 @@ class Comment(models.Model):
     product = models.ForeignKey(Product,
             on_delete=models.CASCADE,
             related_name='comments')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments', on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=80)
     email = models.EmailField(blank=True, null=True)
     body = RichTextUploadingField()
@@ -161,6 +163,7 @@ class Comment(models.Model):
 
 
 class Contact(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=100)
     body = models.TextField()
     phone_number = models.IntegerField(validators=[MinValueValidator(61000000),

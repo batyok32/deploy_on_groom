@@ -1,6 +1,7 @@
-{% extends "shop/base.html" %}
+{% extends "account_base.html" %}
 {% load static %}
 {% load i18n %}
+{% load product_tags %}
 {% block title %}Edit your account{% endblock %}
 
 {% block content %}
@@ -24,8 +25,8 @@
                     <div class="breadcrumb__text">
                         <h2>{% trans "Edit Profile" %}</h2>
                         <div class="breadcrumb__option">
-                            <a href="{% url 'shop:product_list' %}">{% trans "Home" %}</a>
-                            <a href="{% url 'dashboard' %}">{% trans "Dashboard" %}</a>
+                            <a href="{% url 'shop:product_list' %}">{% trans "Home" %}/</a>
+                            <a href="{% url 'dashboard' %}">{% trans "Dashboard" %}/</a>
                             <span>{% trans "Edit Profile" %}</span>
                         </div>
                     </div>
@@ -33,155 +34,80 @@
             </div>
         </div>
     </section>
-    <!-- Breadcrumb Section End -->
+    <body class="bg-gradient-primary">
 
-    <!-- Checkout Section Begin -->
-<!-- Checkout Section Begin -->
-    <section class="checkout spad">
-        <div class="container">
-            <div class="checkout__form">
-                <h4>{% trans "Register" %}</h4>
-                 <form method="post" class="order-form">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-6">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        {{ user_form.username.errors}}
-                                        <p>User Name<span>*</span></p>
-                                        {{ user_form.username }}
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Profile</h1>
+                            </div>
+                            <form method='post' class="user">
+                                <div class="form-group row">
+                                    <div class="col-sm-12 mb-3 mb-sm-0">
+                                      {{ user_form.username.errors}}
+                                      {{ user_form.username.label }}
+                                        {% comment %} <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                            placeholder="First Name"> {% endcomment %}
+                                        {{ user_form.username|addclass:"form-control form-control-user" }}
                                     </div>
+                                    {% comment %} <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
+                                            placeholder="Last Name">
+                                    </div> {% endcomment %}
                                 </div>
-                                <div class="col-lg-6">
-
-                                    <div class="checkout__input">
-                                        {{ profile_form.phone_number.errors }}
-                                        <p>Phone<span>*</span></p>
-                                        <div class="input-group mb-3">
+                                <div class="form-group" style='margin-bottom:35px;'>
+                                  {{ profile_form.phone_number.errors }}
+                                  {{ profile_form.phone_number.label }}
+                                   <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon1">+993</span>
-                                                {{ profile_form.phone_number }}
+                                               {{ profile_form.phone_number|addclass:"form-control form-control-user" }}
                                             </div>
-                                            
-                                        </div>
-                                      </div>
-                                  </div>
+                                    {% comment %} <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                        placeholder="Email Address"> {% endcomment %}
+                                    
                                 </div>
-                                
-
-                                   
-                            <div class="checkout__input">
-                                {{  profile_form.city.errors }}
-                                <p>City<span>*</span></p>
-                                {{  profile_form.city }}
+                                <div class="form-group row" style='margin-top:35px;'>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                      {{ profile_form.city.errors }}
+                                      {{ profile_form.city.label }}
+                                        {% comment %} <input type="password" class="form-control form-control-user"
+                                            id="exampleInputPassword" placeholder="Password"> {% endcomment %}
+                                      {{ profile_form.city }}
+                                    </div>
+                                    <div style='margin-top:35px;' class="col-sm-12">
+                                      {{  profile_form.address.errors }}
+                                      {{  profile_form.address.label }}
+                                        {% comment %} <input type="password" class="form-control form-control-user"
+                                            id="exampleRepeatPassword" placeholder="Repeat Password"> {% endcomment %}
+                                      {{  profile_form.address|addclass:'form-control form-control-user' }}
+                                    </div>
+                                </div>
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary btn-user btn-block">{% trans "Edit " %}</button>
+                          
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="{% url 'password_reset' %}">Forgot Password?</a>
                             </div>
-                            <br>
-                            <div class="checkout__input">
-                                {{  profile_form.address.errors }}
-                                <p>Address<span>*</span></p>
-                                {{  profile_form.address }}
+                            <div class="text-center">
+                                <a class="small" href="{% url 'login' %}">Already have an account? Login!</a>
                             </div>
-                           {% csrf_token %}
-                        <button type="submit" class="site-btn">{% trans "Edit" %}</button>
                         </div>
-                                        
-                        
-                      </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
-            <div>
+            </div>
         </div>
-    </section>
- {% comment %} <div class="container">
- 
-    {% comment %} <h3>Edit your account</h3>
-    <p>You can edit your account using the following form:</p>
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    {% csrf_token %}
-    <p><input type="submit" value="Save changes"></p> {%  %}
-  </form>
-    <form id="form" class="form" method="post" enctype="multipart/form-data">
-      <div class="form__group">
-        <label for="name" class="">Username</label>
-        {{ user_form.username.errors }}
-        {{ user_form.username }}
-        <span class="helper-text"></span>
-      </div>
-      <div class="checkout__input">
-                                        {{ form.phone_number.errors }}
-                                        <p>Phone<span>*</span></p>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">+993</span>
-                                                {{ form.phone_number }}
-                                            </div>
-                                            {% comment %} <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                                            {{ form.phone_number }} {%  %}
-                                        </div>
-                                        {% comment %} <input type="text"> {%  %}
-                                        
-                                    </div>
 
-      <div class="form__group">
-        {{ form.phone_number.errors }}
-        <p>Phone<span>*</span></p>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">+993</span>
-            {{ form.phone_number }}
-          </div>
-                                            {% comment %} <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                                            {{ form.phone_number }} {%  %}
-          </div>
-                                        {% comment %} <input type="text"> {%  %}
-                                        
-      </div>
-
-      <div class="form__group">
-        <label for="city" class="">City</label>
-        {{ profile_form.city.errors }}
-        {{ profile_form.city }}
-        <span class="helper-text"></span>
-      </div>
-
-      <div class="form__group">
-        <label for="address" class="">Address</label>
-        {{ profile_form.address.errors }}
-        {{ profile_form.address }}
-        <span class="helper-text"></span>
-      </div>
-
-      
-      {% csrf_token %}
-      <button class="btn__large">Edit</button>
-    </form>
+    </div>
     
-    {% comment %} <form id="form" class="form" action="{% url 'login' %}" method="post">
-      <div class="form__group">
-        <label for="name" class="">Name</label>
-        {{ form.username }}
-        <span class="helper-text"></span>
-      </div>
-
-
-      <div class="form__group">
-        <label for="password" class="">Password</label>
-        {{ form.password }}        
-        <span class="helper-text"></span>
-      </div>
-
-      {% csrf_token %}
-      <button class="btn__large">Login</button>
-    </form> {%  %}
-    
-  </div>
-   {% endcomment %}
 
 {% endblock %}

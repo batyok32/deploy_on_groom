@@ -24,16 +24,16 @@ from django.utils.translation import gettext_lazy as _
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+# # Quick-start development settings - unsuitable for production
+# # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'm!na)(*k*3g0yim9$4i-8%3wzmjv$rc7+m@3&llprp1(v^&1mj'
+# # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = 'm!na)(*k*3g0yim9$4i-8%3wzmjv$rc7+m@3&llprp1(v^&1mj'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 # INTERNAL_IPS = [
 #     '127.0.0.1',
 # ]
@@ -116,30 +116,30 @@ WSGI_APPLICATION = 'myshop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'new_shop',
-        'USER': 'new_shop',
-        'PASSWORD': 'django041',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
-
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": "redis://127.0.0.1:6379/1",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient"
-#         },
-#         "KEY_PREFIX": "example"
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'new_shop',
+#         'USER': 'new_shop',
+#         'PASSWORD': 'django041',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
 #     }
 # }
 
-# # Cache time to live is 15 minutes.
-# CACHE_TTL = 60 * 15
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+        "KEY_PREFIX": "example"
+    }
+}
+
+# Cache time to live is 15 minutes.
+CACHE_TTL = 60 * 15
 
 
 
@@ -223,9 +223,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-STATIC_DIR= os.path.join(BASE_DIR, 'static/')
-STATICFILES_DIRS = [STATIC_DIR]
+# # STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# STATIC_DIR= os.path.join(BASE_DIR, 'static/')
+# STATICFILES_DIRS = [STATIC_DIR]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
@@ -327,3 +327,9 @@ CKEDITOR_CONFIGS = {
 #     'debug_toolbar.panels.templates.TemplatesPanel',
 #     'debug_toolbar.panels.logging.LoggingPanel',
 #     'debug_toolbar.panels.redirects.RedirectsPanel']
+
+
+try:
+    from .local_settings import *
+except ImportError:
+    from .prod_settings import *

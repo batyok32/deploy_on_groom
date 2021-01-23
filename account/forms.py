@@ -3,9 +3,9 @@ from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 class LoginForm(forms.Form):
-    username=forms.CharField()
+    username=forms.CharField(label='Username', widget=forms.TextInput(attrs={'placeholder': 'Enter email'}))
     password=forms.CharField(widget=forms.PasswordInput)
-
+    
 from django.contrib.auth.models import User
 
 
